@@ -37,6 +37,41 @@
 .flex-pauseplay span {
   text-transform: capitalize;
 }
+img {
+  vertical-align: middle;
+  border-style: none;
+  width: 60px;
+}
+
+/* Add some top margin to navbar and shopping-cart */
+.navbar {
+  margin-bottom: 20px; /* Adjust the value as needed */
+}
+
+.shopping-cart {
+  margin-top: 20px; /* Adjust the value as needed */
+}
+
+/* Add space between navbar and shopping-cart */
+.container {
+  margin-bottom: 20px; /* Adjust the value as needed */
+}
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.85rem;
+  margin-bottom: 0.5rem;
+}
+.navbar {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0rem 5rem;
+}
 /* ====================================================================================================================
  * BASE STYLES
  * ====================================================================================================================*/

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <title>Shopping Cart</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/tooplate-main.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+</head>
+
+<body>
+<style>
+img {
+    vertical-align: middle;
+    border-style: none;
+    width: 60px;
+}
+
+/* Add some top margin to navbar and shopping-cart */
+.navbar {
+    margin-bottom: 20px; /* Adjust the value as needed */
+}
+
+.shopping-cart {
+    margin-top: 20px; /* Adjust the value as needed */
+}
+
+/* Add space between navbar and shopping-cart */
+.container {
+    margin-bottom: 20px; /* Adjust the value as needed */
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.85rem;
+    margin-bottom: 0.5rem;
+}
+.navbar {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0rem 5rem;
+}
+</style>
+    <!-- Your existing HTML code -->
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+  <div class="container ">
+    <a class="navbar-brand" href="#"><img src="assets/images/header-logo.png" alt=""></a>
+    <li class="nav-item d-flex justify-content-end">
+        <a class="nav-link" href="shop.html">
+            <img src="assets/images/a5a4e930deff8735999705a231208995-removebg-preview.jpg" alt="">
+        </a>  
+    
+    </li>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="products.html">Products
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <!-- Shopping Cart Section -->
+    <div class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2></h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items">
+                            <!-- Cart items will be added dynamically here -->
+                        </tbody>
+                    </table>
+                    <p>Total: $<span id="cart-total">0.00</span></p>
+                    <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+
+    <script>
+        // Sample data for products
+        const products = [
+            { id: 1, name: 'Product 1', price: 15.00 },
+            { id: 2, name: 'Product 2', price: 25.00 },
+            { id: 3, name: 'Product 3', price: 35.00 },
+            // Add more products as needed
+        ];
+
+        // Function to add a product to the cart
+        function addToCart(productId) {
+            const selectedProduct = products.find(product => product.id === productId);
+
+            if (selectedProduct) {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(selectedProduct);
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                updateCartDisplay(cart);
+            }
+        }
+
+        // Function to update the cart display
+        function updateCartDisplay(cart) {
+            const cartItemsElement = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            if (cartItemsElement && cartTotalElement) {
+                cartItemsElement.innerHTML = '';
+
+                let total = 0;
+                cart.forEach(item => {
+                    total += item.price;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>1</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td><button class="btn btn-danger" onclick="removeFromCart(${item.id})">Remove</button></td>
+                    `;
+
+                    cartItemsElement.appendChild(row);
+                });
+
+                cartTotalElement.innerText = `$${total.toFixed(2)}`;
+            }
+        }
+
+        // Function to remove a product from the cart
+        function removeFromCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            updateCartDisplay(cart);
+        }
+
+        // Sample function to handle "Add to Cart" button click
+        document.addEventListener('DOMContentLoaded', function () {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const productId = parseInt(button.dataset.productId, 10);
+                    addToCart(productId);
+                });
+            });
+
+            // Initialize cart display on page load
+            const initialCart = JSON.parse(localStorage.getItem('cart')) || [];
+            updateCartDisplay(initialCart);
+        });
+
+        function checkout() {
+            // Implement your checkout logic here
+            alert('Implement your checkout logic here!');
+        }
+    
+    </script>
+</body>
+
+</html>
