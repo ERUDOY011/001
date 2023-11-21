@@ -572,7 +572,8 @@ a {
 	margin-bottom: 20px;
 }
 .about-page .left-image img {
-	max-width: 100%;
+	width: 324px;
+  	height: 205px;
 }
 .about-page .right-content span {
 	display: inline-block;
